@@ -2,7 +2,7 @@ import React from 'react'
 
 const Category = () => {
     return (
-        <div className="w-full h-[60px] bg-white">
+        <div className="w-full h-[60px] bg-white max-[768px]:mb-[50px]">
             <div className="flex flex-wrap justify-center overflow-x-auto space-x-4 py-2 px-4">
                 <div className="max-[768px]:mt-[20px] flex-shrink-0 w-[120px] h-[40px] sm:w-[130px] sm:h-[50px]">
                     <button className="w-full h-full bg-[#311f09] rounded-full flex items-center justify-center shadow-lg transition-transform transform hover:scale-105">

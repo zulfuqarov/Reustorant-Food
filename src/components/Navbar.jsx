@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
 
     const [showBar, setshowBar] = useState(false)
@@ -21,11 +21,11 @@ const Navbar = () => {
                 </div>
 
                 <div className="hidden md:flex space-x-8">
-                    <a href="#" className="text-[#311f09] font-normal text-sm">Home</a>
-                    <a href="#" className="text-[#311f09] font-normal text-sm">About us</a>
-                    <a href="#" className="text-[#311f09] font-normal text-sm">Order online</a>
-                    <a href="#" className="text-[#311f09] font-normal text-sm">Reservation</a>
-                    <a href="#" className="text-[#311f09] font-normal text-sm">Contact us</a>
+                    <Link to="/" className="text-[#311f09] font-normal text-sm">Home</Link>
+                    <Link to="/About" className="text-[#311f09] font-normal text-sm">About us</Link>
+                    <Link to="/Order-online" className="text-[#311f09] font-normal text-sm">Order online</Link>
+                    <Link to="/Reservation" className="text-[#311f09] font-normal text-sm">Reservation</Link>
+                    <Link to="/Contact" className="text-[#311f09] font-normal text-sm">Contact us</Link>
                 </div>
 
                 <div className="md:hidden flex items-center">
@@ -45,11 +45,11 @@ const Navbar = () => {
 
             <div className={`h-0 min-[768px]:h-0 min-[768px]:overflow-hidden overflow-hidden transition-all fixed top-[91px] left-0 w-full bg-white shadow-md ${showBar ? 'h-[300px] overflow-visible ' : ''}`}>
                 <div className={`flex flex-col overflow-hidden transition-all h-0 items-center py-0 ${showBar ? 'overflow-hidden h-[100%] py-4' : ''}`}>
-                    <a href="#" className="text-[#311f09] font-normal text-sm py-2">Home</a>
-                    <a href="#" className="text-[#311f09] font-normal text-sm py-2">About us</a>
-                    <a href="#" className="text-[#311f09] font-normal text-sm py-2">Order online</a>
-                    <a href="#" className="text-[#311f09] font-normal text-sm py-2">Reservation</a>
-                    <a href="#" className="text-[#311f09] font-normal text-sm py-2">Contact us</a>
+                    <Link to="/" className="text-[#311f09] font-normal text-sm py-2">Home</Link>
+                    <Link to="/About" className="text-[#311f09] font-normal text-sm py-2">About us</Link>
+                    <Link to="/Order-online" className="text-[#311f09] font-normal text-sm py-2">Order online</Link>
+                    <Link to="/Reservation" className="text-[#311f09] font-normal text-sm py-2">Reservation</Link>
+                    <Link to="/Contact" className="text-[#311f09] font-normal text-sm py-2">Contact us</Link>
                     <button className="bg-[#3fa62e] text-white font-semibold text-sm rounded-full px-4 py-2 mt-4">
                         Log in
                     </button>
