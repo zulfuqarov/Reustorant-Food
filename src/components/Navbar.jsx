@@ -43,9 +43,9 @@ const Navbar = () => {
                 </div>
 
                 <div className="hidden md:flex">
-                    <button className="bg-[#3fa62e] text-white font-semibold text-sm rounded-full px-4 py-2">
+                    <Link to='/Sign' className="bg-[#3fa62e] text-white font-semibold text-sm rounded-full px-4 py-2">
                         Log in
-                    </button>
+                    </Link>
                 </div>
             </div>
 
