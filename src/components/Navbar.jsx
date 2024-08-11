@@ -28,6 +28,12 @@ const Navbar = () => {
                     <Link to="/Contact" className="text-[#311f09] font-normal text-sm">Contact us</Link>
                 </div>
 
+                <div>
+                    <button>
+                        <i className="fa-solid fa-cart-shopping fa-fade text-[#ff8900] text-[20px]"></i>
+                    </button>
+                </div>
+
                 <div className="md:hidden flex items-center">
                     <button onClick={ShowBarsMenu} className="text-[#311f09]">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
