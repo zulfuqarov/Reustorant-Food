@@ -7,6 +7,7 @@ import About from './pages/About';
 import Order from './pages/Order';
 import Sign from './pages/Sign';
 import Register from './pages/Register';
+import Reservations from './pages/Reservations';
 
 const App = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/" element={<Homepage />} />
         <Route path='/About' element={<About />} />
         <Route path='/Order-online' element={<Order />} />
+        <Route path='/Reservation' element={<Reservations />} />
         <Route path="/Sign" element={<Sign />} />
         <Route path="/Register" element={<Register />} />
       </Routes>
