@@ -8,6 +8,7 @@ import Order from './pages/Order';
 import Sign from './pages/Sign';
 import Register from './pages/Register';
 import Reservations from './pages/Reservations';
+import Contact from './pages/Contact';
 
 const App = () => {
   const location = useLocation();
@@ -28,7 +29,8 @@ const App = () => {
         <Route path='/Reservation' element={<Reservations />} />
         <Route path="/Sign" element={<Sign />} />
         <Route path="/Register" element={<Register />} />
-      </Routes>
+        <Route path="/Contact" element={<Contact />} />
+      </Routes >
       {
         hideNavbarPaths.includes(location.pathname)
           ? null
