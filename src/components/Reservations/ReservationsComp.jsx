@@ -2,7 +2,10 @@ import React from 'react'
 
 import Reservations from '../../assets/img/Reservations.svg'
 
-const ReservationsComp = () => {
+const ReservationsComp = ({ CheckReservation }) => {
+
+
+
     return (
 
         <div className="flex flex-col lg:flex-row items-center lg:items-start w-full h-full p-4 lg:p-0">
@@ -49,6 +52,7 @@ const ReservationsComp = () => {
 
                     <div className="w-full lg:w-[477px] p-4">
                         <button
+                            onClick={CheckReservation}
                             className="w-full p-4 bg-[#ff8900] rounded-[20px] text-white text-2xl font-semibold shadow-md hover:bg-[#e07c00] hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"
                         >
                             Book now
@@ -57,7 +61,7 @@ const ReservationsComp = () => {
                 </div>
             </div>
         </div>
-    
+
     )
 }
 
