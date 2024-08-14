@@ -10,6 +10,8 @@ import Register from './pages/Register';
 import Reservations from './pages/Reservations';
 import Contact from './pages/Contact';
 
+import Context from './context/Context';
+
 const App = () => {
   const location = useLocation();
 
@@ -17,26 +19,28 @@ const App = () => {
 
   return (
     <>
-      {
-        hideNavbarPaths.includes(location.pathname)
-          ? null
-          : <Navbar />
-      }
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path='/About' element={<About />} />
-        <Route path='/Order-online' element={<Order />} />
-        <Route path='/Reservation' element={<Reservations />} />
-        <Route path="/Sign" element={<Sign />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/Contact" element={<Contact />} />
-      </Routes >
-      {
-        hideNavbarPaths.includes(location.pathname)
-          ? null
-          : <Footer />
+      <Context>
+        {
+          hideNavbarPaths.includes(location.pathname)
+            ? null
+            : <Navbar />
+        }
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path='/About' element={<About />} />
+          <Route path='/Order-online' element={<Order />} />
+          <Route path='/Reservation' element={<Reservations />} />
+          <Route path="/Sign" element={<Sign />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Contact" element={<Contact />} />
+        </Routes >
+        {
+          hideNavbarPaths.includes(location.pathname)
+            ? null
+            : <Footer />
 
-      }
+        }
+      </Context>
     </>
   )
 }
