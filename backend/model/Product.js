@@ -13,15 +13,16 @@ const Product = mongoose.Schema({
     type: Number,
     required: true,
   },
-  picture:{
+  picture: {
     type: String,
-    required: true,
   },
-  subcategory: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Subcategory",
-    required: true,
-  },
+  subcategory: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subcategory",
+      required: true,
+    },
+  ],
 });
 
 export default mongoose.model("Product", Product);

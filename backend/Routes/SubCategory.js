@@ -17,6 +17,45 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/categoryPull/:_id", async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { id } = req.body;
+
+    const subcategory = await Subcategory.findByIdAndUpdate(
+      _id,
+      {
+        $pull: { category: { $in: id } },
+      },
+      { new: true }
+    );
+
+    res.json(subcategory);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.post("/categoryPush/:_id", async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { id } = req.body;
+
+    const subcategory = await Subcategory.findByIdAndUpdate(
+      _id,
+      {
+        $push: { category: id },
+      },
+      { new: true }
+    );
+    res.json(subcategory);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.get("/:_id", async (req, res) => {
   try {
     const { _id } = req.params;
@@ -32,36 +71,6 @@ router.get("/:_id", async (req, res) => {
   }
 });
 
-router.delete("/:_id", async (req, res) => {
-  try {
-    const { _id } = req.params;
-    const deletingSubCategory = await Subcategory.findByIdAndDelete(_id);
-    res.json(deletingSubCategory);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-router.post("/category/:_id", async (req, res) => {
-  try {
-    const { _id } = req.params;
-    const { id } = req.body;
-
-    const subcategory = await Subcategory.findByIdAndUpdate(
-      _id,
-      {
-        $pull: { category: id },
-      },
-      { new: true }
-    );
-    res.json(subcategory);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: error.message });
-  }
-});
-
 router.get("/", async (req, res) => {
   try {
     const subCategoryAll = await Subcategory.find().populate("category");
@@ -71,6 +80,17 @@ router.get("/", async (req, res) => {
     res
       .status(500)
       .json({ message: "An error occurred while fetching subcategories." });
+  }
+});
+
+router.delete("/:_id", async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const deletingSubCategory = await Subcategory.findByIdAndDelete(_id);
+    res.json(deletingSubCategory);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 });
 
