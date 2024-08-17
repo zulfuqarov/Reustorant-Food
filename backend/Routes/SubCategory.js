@@ -17,6 +17,25 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/categoryPush/:_id", async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const { id } = req.body;
+
+    const subcategory = await Subcategory.findByIdAndUpdate(
+      _id,
+      {
+        $addToSet: { category: id },
+      },
+      { new: true }
+    );
+    res.json(subcategory);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
 router.post("/categoryPull/:_id", async (req, res) => {
   try {
     const { _id } = req.params;
@@ -30,25 +49,6 @@ router.post("/categoryPull/:_id", async (req, res) => {
       { new: true }
     );
 
-    res.json(subcategory);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-router.post("/categoryPush/:_id", async (req, res) => {
-  try {
-    const { _id } = req.params;
-    const { id } = req.body;
-
-    const subcategory = await Subcategory.findByIdAndUpdate(
-      _id,
-      {
-        $push: { category: id },
-      },
-      { new: true }
-    );
     res.json(subcategory);
   } catch (error) {
     console.log(error);

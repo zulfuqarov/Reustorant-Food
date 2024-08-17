@@ -25,7 +25,13 @@ router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const productsBySubcategory = await Product.find({
       subcategory: id,
-    }).populate("subcategory");
+    }).populate({
+      path: "subcategory",
+      populate: {
+        path: "category",
+        model: "Category",
+      },
+    });
     res.status(200).json(productsBySubcategory);
   } catch (error) {
     console.log(error);
