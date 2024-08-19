@@ -10,11 +10,14 @@ const Context = ({ children }) => {
 
     // get all product
     const [allProduct, setallProduct] = useState([])
+    const [totalPage, settotalPage] = useState()
+    const [currentPage, setcurrentPage] = useState(1)
     const getAllProduct = async () => {
         try {
-            const response = await axios.get(`${REACT_APP_BACKEND_HOST}/Product`)
+            const response = await axios.get(`${REACT_APP_BACKEND_HOST}/Product/?page=${currentPage}`)
             console.log(response.data)
-            setallProduct(response.data)
+            setallProduct(response.data.allProduct)
+            settotalPage(response.data.totalPages)
         } catch (error) {
             console.log(error)
         }
@@ -50,7 +53,7 @@ const Context = ({ children }) => {
         setallProduct([])
         try {
             const response = await axios.get(`${REACT_APP_BACKEND_HOST}/Product/${subcategoryId}`)
-            console.log(response.data)
+            // console.log(response.data)
             setproduct(response.data)
         } catch (error) {
             console.log(error)
@@ -73,6 +76,10 @@ const Context = ({ children }) => {
             // all product
             getAllProduct,
             allProduct,
+            // total page
+            totalPage,
+            currentPage,
+            setcurrentPage
 
         }}>
             {children}

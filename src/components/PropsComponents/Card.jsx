@@ -7,7 +7,7 @@ const Card = () => {
 
     useEffect(() => {
         context.getAllProduct()
-    }, [])
+    }, [context.currentPage])
 
     return (
         <div className='grid grid-cols-3 gap-4 pt-[80px] max-[991px]:grid-cols-2 max-[768px]:grid-cols-1'>
