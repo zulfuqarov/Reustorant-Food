@@ -12,16 +12,17 @@ import OurCustumers from '../components/Home/OurCustumers'
 import CustomersCard from '../components/Home/CustomersCard'
 import CustumerUser from '../components/Home/CustumerUser'
 import Open from '../components/Home/Open'
+import ProductCategory from '../components/PropsComponents/ProductCategory'
 const Home = () => {
     return (
         <section>
             <Welcome />
             <OurPopular />
             <Category />
-            <div className='grid grid-cols-3 gap-4 pt-[80px] max-[991px]:grid-cols-2 max-[768px]:grid-cols-1'>
-                <Card />
-                <Card />
-                <Card />
+            <div>
+                <div>
+                    <ProductCategory />
+                </div>
                 <Card />
             </div>
             <Paginations />

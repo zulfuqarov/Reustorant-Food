@@ -14,13 +14,7 @@ const Order = () => {
                 <div>
                     <ProductCategory />
                 </div>
-                <div className='grid grid-cols-3 gap-4 pt-[80px] max-[991px]:grid-cols-2 max-[768px]:grid-cols-1'>
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
-                </div>
+                <Card />
             </div>
             <Paginations />
         </div>
