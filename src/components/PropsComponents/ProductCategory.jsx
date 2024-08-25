@@ -6,7 +6,7 @@ const ProductCategory = () => {
     const context = useContext(FoodContext)
 
     return (
-        <div className="w-full h-[60px] bg-white max-[768px]:mb-[50px]">
+        <div className="w-full h-full bg-white ">
             <div className="flex flex-wrap justify-center overflow-x-auto space-x-4 py-[15px] px-4">
                 {
                     context.subCategory &&

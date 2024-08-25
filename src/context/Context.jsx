@@ -8,14 +8,24 @@ const { REACT_APP_BACKEND_HOST } = env
 
 const Context = ({ children }) => {
 
+    const [loading, setloading] = useState(false)
+
+    // get product 
+    const [product, setproduct] = useState([])
+
     // get all product
     const [allProduct, setallProduct] = useState([])
     const [totalPage, settotalPage] = useState()
     const [currentPage, setcurrentPage] = useState(1)
     const getAllProduct = async () => {
+        setproduct([])
+        setcurrentPage(1)
+        setloading(true)
         try {
-            const response = await axios.get(`${REACT_APP_BACKEND_HOST}/Product/?page=${currentPage}`)
-            console.log(response.data)
+            const response = await axios.get(`${REACT_APP_BACKEND_HOST}/Product`)
+            // console.log(response.data)
+            console.log('1')
+            setloading(false)
             setallProduct(response.data.allProduct)
             settotalPage(response.data.totalPages)
         } catch (error) {
@@ -48,18 +58,20 @@ const Context = ({ children }) => {
     }
 
     // get product
-    const [product, setproduct] = useState([])
     const getProduct = async (subcategoryId) => {
         setallProduct([])
+        setcurrentPage(1)
+        setloading(true)
         try {
             const response = await axios.get(`${REACT_APP_BACKEND_HOST}/Product/${subcategoryId}`)
-            // console.log(response.data)
-            setproduct(response.data)
+            // console.log(response)
+            setproduct(response.data.productsBySubcategory)
+            settotalPage(response.data.totalPages)
+            setloading(false)
         } catch (error) {
             console.log(error)
         }
     }
-
 
 
     return (
@@ -79,7 +91,9 @@ const Context = ({ children }) => {
             // total page
             totalPage,
             currentPage,
-            setcurrentPage
+            setcurrentPage,
+            // loading
+            loading
 
         }}>
             {children}

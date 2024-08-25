@@ -23,6 +23,9 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const totalProducts = await Product.countDocuments({
+      subcategory: id,
+    });
     const productsBySubcategory = await Product.find({
       subcategory: id,
     }).populate({
@@ -32,7 +35,10 @@ router.get("/:id", async (req, res) => {
         model: "Category",
       },
     });
-    res.status(200).json(productsBySubcategory);
+    res.status(200).json({
+      productsBySubcategory,
+      totalPages: Math.ceil(totalProducts / 6),
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
@@ -76,18 +82,12 @@ router.post("/ProductPull/:id", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  const page = req.query.page || 1;
-  const limit = 6;
-  const skip = (page - 1) * limit;
   try {
     const totalProducts = await Product.countDocuments();
-    const allProduct = await Product.find()
-      .skip(skip)
-      .limit(limit)
-      .populate("subcategory");
+    const allProduct = await Product.find().populate("subcategory");
     res.status(200).json({
       allProduct,
-      totalPages: Math.ceil(totalProducts / limit),
+      totalPages: Math.ceil(totalProducts / 6),
     });
   } catch (error) {
     console.log(error);

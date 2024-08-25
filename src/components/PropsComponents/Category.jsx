@@ -16,7 +16,13 @@ const Category = () => {
                     context.category &&
                     context.category.map((oneMap, index) => (
                         <div key={index} className="max-[768px]:mt-[20px] flex-shrink-0 w-[120px] h-[40px] sm:w-[130px] sm:h-[50px]">
-                            <button onClick={() => context.getSubCategory(oneMap._id)} className="w-full h-full bg-[#311f09] rounded-full flex items-center justify-center shadow-lg transition-transform transform hover:scale-105">
+                            <button onClick={() => {
+                                if (oneMap.name === "All Product") {
+                                    context.getAllProduct()
+                                } else {
+                                    context.getSubCategory(oneMap._id)
+                                }
+                            }} className="w-full h-full bg-[#311f09] rounded-full flex items-center justify-center shadow-lg transition-transform transform hover:scale-105">
                                 <p className="text-white text-xs sm:text-sm md:text-base font-semibold [font-family:'Poppins-SemiBold',Helvetica]">
                                     {oneMap.name}
                                 </p>
