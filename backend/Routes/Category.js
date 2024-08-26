@@ -5,6 +5,9 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { name } = req.body;
+    if (!name.trim()) {
+      return res.status(400).json({ message: "Category name is required" });
+    }
     const newCategory = new Category({ name });
     await newCategory.save();
     res.status(201).json(newCategory);
@@ -18,6 +21,9 @@ router.post("/Update/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
+    if (!name.trim()) {
+      return res.status(400).json({ message: "Category name is required" });
+    }
     const updateCategory = await Category.findByIdAndUpdate(
       id,
       {

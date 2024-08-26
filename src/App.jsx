@@ -11,15 +11,20 @@ import Reservations from './pages/Reservations';
 import Contact from './pages/Contact';
 
 import Context from './context/Context';
+import Admin from './pages/Admin';
+
+import { ToastContainer } from 'react-toastify';
+
 
 const App = () => {
   const location = useLocation();
 
-  const hideNavbarPaths = ["/Sign", "/Register"];
+  const hideNavbarPaths = ["/Sign", "/Register", "/Admin"];
 
   return (
     <>
       <Context>
+        <ToastContainer />
         {
           hideNavbarPaths.includes(location.pathname)
             ? null
@@ -33,6 +38,7 @@ const App = () => {
           <Route path="/Sign" element={<Sign />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Contact" element={<Contact />} />
+          <Route path="/Admin" element={<Admin />} />
         </Routes >
         {
           hideNavbarPaths.includes(location.pathname)

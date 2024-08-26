@@ -6,6 +6,9 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { name, category } = req.body;
+    if(!name.trim() || category.length < 0){
+      return res.status(400).json({ message: "Name and category must not be empty." });
+    }
     const subcategory = new Subcategory({ category, name });
     await subcategory.save();
     res.status(201).json(subcategory);

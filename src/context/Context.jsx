@@ -76,6 +76,7 @@ const Context = ({ children }) => {
 
     return (
         <FoodContext.Provider value={{
+            REACT_APP_BACKEND_HOST,
             // category
             getCategory,
             category,
