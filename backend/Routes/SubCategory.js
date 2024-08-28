@@ -6,8 +6,10 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { name, category } = req.body;
-    if(!name.trim() || category.length < 0){
-      return res.status(400).json({ message: "Name and category must not be empty." });
+    if (!name.trim() || category.length < 0) {
+      return res
+        .status(400)
+        .json({ message: "Name and category must not be empty." });
     }
     const subcategory = new Subcategory({ category, name });
     await subcategory.save();
@@ -17,6 +19,27 @@ router.post("/", async (req, res) => {
     res
       .status(500)
       .json({ message: "An error occurred while creating the reservation." });
+  }
+});
+
+router.post("/categoryName/:id", async (req, res) => {
+  const { name } = req.body;
+  const { id } = req.params;
+  try {
+    if (!name.trim()) {
+      return res.status(400).json({ message: "Category name is required" });
+    }
+
+    const updatedSubcategory = await Subcategory.findByIdAndUpdate(
+      id,
+      {
+        $set: { name },
+      },
+      { new: true }
+    );
+    res.json(updatedSubcategory);
+  } catch (error) {
+    console.log(error);
   }
 });
 
