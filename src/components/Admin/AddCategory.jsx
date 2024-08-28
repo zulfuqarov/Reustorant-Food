@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { FoodContext } from '../../context/Context'
 import { toast } from 'react-toastify'
+import { AdminContext } from '../../pages/Admin'
 
-const AddCategory = ({ getCategory, category }) => {
+const AddCategory = () => {
 
     const context = useContext(FoodContext)
-
+    const { getCategory, category } = useContext(AdminContext)
 
 
     // handleAddInput
@@ -101,8 +102,6 @@ const AddCategory = ({ getCategory, category }) => {
 
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
-            <h1 className="text-3xl font-bold mb-4">Admin Page</h1>
-
             <div className="bg-white p-4 rounded-lg shadow-md mb-6">
                 <h2 className="text-xl font-semibold mb-4">Add New Category</h2>
                 <div className="mb-4">

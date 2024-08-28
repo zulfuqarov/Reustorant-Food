@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { FoodContext } from '../../context/Context'
-const AddSubCategory = ({ category, getSubCategory, subCategory }) => {
+import { AdminContext } from '../../pages/Admin'
+const AddSubCategory = () => {
 
     const context = useContext(FoodContext)
+    const { category, getSubCategory, subCategory } = useContext(AdminContext)
 
     // show edit
     const [editIndex, setEditIndex] = useState(null)
@@ -47,7 +49,6 @@ const AddSubCategory = ({ category, getSubCategory, subCategory }) => {
             toast.success('Subcategory added successfully')
             setaddSubCategory(response.data)
             setsubCategoryInput('')
-            setCategoryInput([])
         } catch (error) {
             console.log(error)
             toast.error(`${error.response.data.message}`)

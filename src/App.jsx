@@ -14,12 +14,14 @@ import Context from './context/Context';
 import Admin from './pages/Admin';
 
 import { ToastContainer } from 'react-toastify';
+import AddCategory from './components/Admin/AddCategory';
+import AddSubCategory from './components/Admin/AddSubCategory';
 
 
 const App = () => {
   const location = useLocation();
 
-  const hideNavbarPaths = ["/Sign", "/Register", "/Admin"];
+  const hideNavbarPaths = ["/Sign", "/Register", "/Admin", "/Admin/Add-Category", "/Admin/Add-SubCategory", "/Admin/Add-Product"];
 
   return (
     <>
@@ -38,7 +40,10 @@ const App = () => {
           <Route path="/Sign" element={<Sign />} />
           <Route path="/Register" element={<Register />} />
           <Route path="/Contact" element={<Contact />} />
-          <Route path="/Admin" element={<Admin />} />
+          <Route path="/Admin" element={<Admin />} >
+            <Route path="Add-Category" element={<AddCategory />} />
+            <Route path="Add-SubCategory" element={<AddSubCategory />} />
+          </Route>
         </Routes >
         {
           hideNavbarPaths.includes(location.pathname)
