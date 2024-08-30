@@ -16,6 +16,7 @@ import Admin from './pages/Admin';
 import { ToastContainer } from 'react-toastify';
 import AddCategory from './components/Admin/AddCategory';
 import AddSubCategory from './components/Admin/AddSubCategory';
+import AddProduct from './components/Admin/AddProduct';
 
 
 const App = () => {
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/Admin" element={<Admin />} >
             <Route path="Add-Category" element={<AddCategory />} />
             <Route path="Add-SubCategory" element={<AddSubCategory />} />
+            <Route path="Add-Product" element={<AddProduct />} />
           </Route>
         </Routes >
         {

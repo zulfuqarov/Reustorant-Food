@@ -33,12 +33,24 @@ const AdminPage = () => {
         }
     }
 
+    // get product
+    const [product, setproduct] = useState([])
+    const getProduct = async () => {
+        try {
+            const response = await axios.get(`${context.REACT_APP_BACKEND_HOST}/Product/`)
+            console.log(response.data)
+            setproduct(response.data.allProduct.reverse())
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getCategory()
     }, [])
 
     return (
-        <AdminContext.Provider value={{ category, getCategory, subCategory, getSubCategory }}>
+        <AdminContext.Provider value={{ category, getCategory, subCategory, getSubCategory, product, getProduct }}>
             <section>
                 <h1 className="text-3xl text-center font-bold mb-4 py-[50px]">Admin Page</h1>
                 <AdminLinks />
