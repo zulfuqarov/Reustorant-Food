@@ -1,27 +1,36 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { AdminContext } from '../../pages/Admin';
 
-const Modal = ({ isOpen, onClose, onSubmit, product, onInputChange, onSubcategoryChange, subcategories, onPictureChange }) => {
+const Modal = ({ isOpen, onClose, product, onInputChange, handleChangeFile, selectedImage, addSubCategoryFunc, removeSubCategoryFunc }) => {
+
+    const { subCategory } = useContext(AdminContext)
+
     if (!isOpen) return null;
 
+    const [showSubCategory, setshowSubCategory] = useState(false)
+    const changeSubCategory = () => {
+        setshowSubCategory(!showSubCategory)
+    }
+
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-[500px]">
-                <h2 className="text-2xl font-semibold mb-4">Edit Product</h2>
-                <div>
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Edit Product</h2>
+                <div className="space-y-4">
                     <input
                         value={product.name}
                         onChange={onInputChange}
                         name="name"
                         type="text"
                         placeholder="Product Name"
-                        className="p-2 border border-gray-300 rounded-lg w-full mb-2"
+                        className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     <textarea
                         value={product.description}
                         onChange={onInputChange}
                         name="description"
                         placeholder="Product Description"
-                        className="p-2 border border-gray-300 rounded-lg w-full mb-2"
+                        className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     <input
                         value={product.price}
@@ -29,50 +38,80 @@ const Modal = ({ isOpen, onClose, onSubmit, product, onInputChange, onSubcategor
                         name="price"
                         type="number"
                         placeholder="Product Price"
-                        className="p-2 border border-gray-300 rounded-lg w-full mb-2"
+                        className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    <select
-                        multiple
-                        value={product.subcategory.map(sub => sub._id)}
-                        onChange={onSubcategoryChange}
-                        className="p-2 border border-gray-300 rounded-lg w-full mb-2"
-                    >
-                        {subcategories.map(subcategory => (
-                            <option key={subcategory._id} value={subcategory._id} label={subcategory.name}>
-                                {subcategory.name}
-                            </option>
-                        ))}
-                    </select>
                     <input
                         type="file"
                         accept="image/*"
-                        onChange={onPictureChange}
-                        className="p-2 border border-gray-300 rounded-lg w-full mb-2"
+                        onChange={handleChangeFile}
+                        className="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    {product.picture && (
+                    {selectedImage && (
                         <img
-                            src={product.picture}
+                            src={selectedImage}
                             alt="Preview"
-                            className="w-24 h-24 object-cover rounded-lg mt-2"
+                            className="w-24 h-24 object-cover rounded-lg mt-4"
                         />
                     )}
                 </div>
-                <div className="flex justify-end mt-4">
+                <div className="flex justify-end mt-6 space-x-3">
                     <button
                         onClick={onClose}
-                        className="bg-gray-500 text-white p-2 rounded-lg mr-2"
+                        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
                     >
                         Cancel
                     </button>
                     <button
-                        onClick={onSubmit}
-                        className="bg-green-500 text-white p-2 rounded-lg"
+                        // onClick={onSubmit}
+                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all"
                     >
                         Save
                     </button>
+                    <button
+                        onClick={changeSubCategory}
+                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
+                    >
+                        Change Subcategory
+                    </button>
                 </div>
             </div>
+            {showSubCategory && (
+                <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 z-40">
+                    <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md max-h-[70vh] overflow-y-auto">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-xl font-semibold text-gray-800">Select Subcategories</h3>
+                            <button
+                                onClick={changeSubCategory}
+                                className="text-gray-600 hover:text-gray-800 transition-all"
+                            >
+                                X
+                            </button>
+                        </div>
+                        {subCategory && subCategory.map((oneMap, indexs) => (
+                            <div key={indexs} className="flex justify-between items-center p-2 bg-gray-100 rounded-md mb-2">
+                                <p className="text-lg text-gray-700">{oneMap.name}</p>
+                                {product.subcategory.some(sub => sub._id === oneMap._id) ? (
+                                    <button
+                                        className="text-red-600 hover:text-red-700 transition-all"
+                                        onClick={() => removeSubCategoryFunc(product._id, oneMap._id)}
+                                    >
+                                        Remove
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="text-green-600 hover:text-green-700 transition-all"
+                                        onClick={() => addSubCategoryFunc(product._id, oneMap._id)}
+                                    >
+                                        Add
+                                    </button>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
+
     );
 };
 

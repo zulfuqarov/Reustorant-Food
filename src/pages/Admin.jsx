@@ -38,7 +38,6 @@ const AdminPage = () => {
     const getProduct = async () => {
         try {
             const response = await axios.get(`${context.REACT_APP_BACKEND_HOST}/Product/`)
-            console.log(response.data)
             setproduct(response.data.allProduct.reverse())
         } catch (error) {
             console.log(error)
@@ -47,6 +46,7 @@ const AdminPage = () => {
 
     useEffect(() => {
         getCategory()
+        getSubCategory()
     }, [])
 
     return (
