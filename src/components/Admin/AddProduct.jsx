@@ -4,6 +4,7 @@ import { AdminContext } from '../../pages/Admin';
 import axios from 'axios';
 import { FoodContext } from '../../context/Context';
 import { toast } from 'react-toastify';
+import AddProductModal from './AddProductModal';
 
 const AddProduct = () => {
 
@@ -20,6 +21,7 @@ const AddProduct = () => {
         })
     }
 
+
     // change File 
     const [inputFile, setinputFile] = useState(null)
     const [selectedImage, setselectedImage] = useState(null)
@@ -31,13 +33,32 @@ const AddProduct = () => {
         setselectedImage(URL.createObjectURL(e.target.files[0]))
     }
 
+    // add Product Modal
+    const [addModal, setaddModal] = useState(false)
+    const addModalShow = () => {
+        setaddModal(true)
+        setselectedImage(null)
+        setinputFile(null)
+        seteditProductInput({})
+    }
 
     // isModalOpen
     const [isModalOpen, setIsModalOpen] = useState(false)
     const handleEditClick = (product) => {
         setIsModalOpen(true)
         seteditProductInput(product)
+        setinputFile(null)
         setselectedImage(null)
+    }
+
+    // add Product
+    const [addProduct, setaddProduct] = useState()
+    const addProductFunc = async () => {
+        try {
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -129,6 +150,24 @@ const AddProduct = () => {
                     />
                 </div>
             </div>
+
+            <div className='w-full flex justify-center my-[30px]'>
+                <button
+                    onClick={addModalShow}
+                    className='className="inline-block  justify-center px-6 py-3 bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-semibold text-lg rounded-lg shadow-md transition-all hover:shadow-lg duration-300 ease-in-out transform hover:scale-105 cursor-pointer"'>Add Product</button>
+            </div>
+
+            {
+                addModal &&
+                <AddProductModal
+                    onClose={() => setaddModal(false)}
+                    isOpen={addModal}
+                    product={editProductInput}
+                    handleChangeFile={handleChangeFile}
+                    selectedImage={selectedImage}
+                    onInputChange={handleEditProduct}
+                />
+            }
 
             {
                 searchTerm.trim().length > 0 ?
