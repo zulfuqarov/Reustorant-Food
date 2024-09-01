@@ -3,6 +3,7 @@ import Modal from './Modal';
 import { AdminContext } from '../../pages/Admin';
 import axios from 'axios';
 import { FoodContext } from '../../context/Context';
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
 
@@ -91,9 +92,29 @@ const AddProduct = () => {
         }
     }
 
+    // update Product
+    const [updateProduct, setupdateProduct] = useState()
+    const updateProductFunc = async (id) => {
+        try {
+            const fileUpload = new FormData();
+            fileUpload.append('name', editProductInput.name);
+            fileUpload.append('price', editProductInput.price)
+            fileUpload.append('description', editProductInput.description)
+            fileUpload.append('picture', inputFile)
+            const response = await axios.put(`${REACT_APP_BACKEND_HOST}/Product/ProductUpdate/${id}`, fileUpload)
+            console.log(response.data)
+            setupdateProduct(response.data.updateProduct)
+            seteditProductInput(response.data.updateProduct)
+            toast.success('Product updated successfully')
+        } catch (error) {
+            console.log(error)
+            toast.error(`${error.response.data.message}`)
+        }
+    }
+
     useEffect(() => {
         getProduct()
-    }, [addSubCategory, removeSubCategory])
+    }, [addSubCategory, removeSubCategory, updateProduct])
 
     return (
         <div className="p-4">
@@ -146,7 +167,9 @@ const AddProduct = () => {
                                 </div>
                             </div>
                         ))
-                        : <p>not found</p> :
+                        : <p className="text-center text-gray-500 bg-gray-100 p-4 rounded-lg shadow-md">
+                            No products found
+                        </p> :
                     product &&
                     product.map((product) => (
                         <div key={product._id} className="flex items-center justify-between mb-4 p-4 border-b border-gray-200 bg-white shadow-lg rounded-lg">
@@ -195,6 +218,7 @@ const AddProduct = () => {
                     selectedImage={selectedImage}
                     addSubCategoryFunc={addSubCategoryFunc}
                     removeSubCategoryFunc={removeSubCategoryFunc}
+                    updateProductFunc={updateProductFunc}
                 />
             )}
         </div>

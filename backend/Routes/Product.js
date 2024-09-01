@@ -1,5 +1,6 @@
 import express from "express";
 import Product from "../model/Product.js";
+import cloudinary from "cloudinary";
 
 const router = express.Router();
 
@@ -78,6 +79,50 @@ router.post("/ProductPull/:id", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
+  }
+});
+
+router.put("/ProductUpdate/:_id", async (req, res) => {
+  const { name, price, description } = req.body;
+  const { _id } = req.params;
+  const defaultImg =
+    "https://orthomoda.ru/bitrix/templates/.default/img/no-photo.jpg";
+
+  let picture =
+    req.files && req.files.picture
+      ? req.files.picture.tempFilePath
+      : defaultImg;
+
+  if (picture !== defaultImg) {
+    picture = await cloudinary.uploader.upload(picture, {
+      use_filename: true,
+      folder: "Home",
+    });
+  }
+
+  try {
+    if (!name.trim() || !price || !description) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    const updateProduct = await Product.findByIdAndUpdate(
+      _id,
+      {
+        $set: {
+          name,
+          price,
+          description,
+          picture: picture !== defaultImg ? picture.url : picture,
+        },
+      },
+      { new: true }
+    ).populate({ path: "subcategory", populate: { path: "category" } });
+
+    res
+      .status(200)
+      .json({ message: "Product has been updated!", updateProduct });
+  } catch (error) {
+    console.log(error);
   }
 });
 

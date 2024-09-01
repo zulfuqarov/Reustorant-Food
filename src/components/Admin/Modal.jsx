@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AdminContext } from '../../pages/Admin';
 
-const Modal = ({ isOpen, onClose, product, onInputChange, handleChangeFile, selectedImage, addSubCategoryFunc, removeSubCategoryFunc }) => {
+const Modal = ({ isOpen, onClose, product, onInputChange, handleChangeFile, selectedImage, addSubCategoryFunc, removeSubCategoryFunc, updateProductFunc }) => {
 
     const { subCategory } = useContext(AdminContext)
 
@@ -11,6 +11,7 @@ const Modal = ({ isOpen, onClose, product, onInputChange, handleChangeFile, sele
     const changeSubCategory = () => {
         setshowSubCategory(!showSubCategory)
     }
+
 
     return (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center z-50">
@@ -62,7 +63,7 @@ const Modal = ({ isOpen, onClose, product, onInputChange, handleChangeFile, sele
                         Cancel
                     </button>
                     <button
-                        // onClick={onSubmit}
+                        onClick={() => updateProductFunc(product._id)}
                         className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all"
                     >
                         Save
