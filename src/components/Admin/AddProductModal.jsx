@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { AdminContext } from '../../pages/Admin';
 
-const AddProductModal = ({ product, onInputChange, onClose, isOpen, selectedImage, handleChangeFile }) => {
+const AddProductModal = ({ product, onInputChange, onClose, isOpen, selectedImage, handleChangeFile, addProductCategoryFunc, addProductCategory, removeProductCategoryFunc, addProductFunc }) => {
 
     const { subCategory } = useContext(AdminContext)
 
@@ -62,7 +62,7 @@ const AddProductModal = ({ product, onInputChange, onClose, isOpen, selectedImag
                         Cancel
                     </button>
                     <button
-                        onClick={() => console.log(product, selectedImage)}
+                        onClick={addProductFunc}
                         className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-all"
                     >
                         Save
@@ -90,12 +90,27 @@ const AddProductModal = ({ product, onInputChange, onClose, isOpen, selectedImag
                         {subCategory && subCategory.map((oneMap, indexs) => (
                             <div key={indexs} className="flex justify-between items-center p-2 bg-gray-100 rounded-md mb-2">
                                 <p className="text-lg text-gray-700">{oneMap.name}</p>
-                                <button
-                                    className="text-green-600 hover:text-green-700 transition-all"
-                                // onClick={}
-                                >
-                                    Add
-                                </button>
+                                {
+                                    addProductCategory.length > 0 ?
+                                        addProductCategory.some(id => id === oneMap._id) ? <button
+                                            onClick={() => removeProductCategoryFunc(oneMap._id)}
+                                            className="text-red-600 hover:text-red-700 transition-all"
+                                        >
+                                            Remove
+                                        </button> : <button
+                                            className="text-green-600 hover:text-green-700 transition-all"
+                                            onClick={() => addProductCategoryFunc(oneMap._id)}
+                                        >
+                                            Add
+                                        </button>
+                                        : <button
+                                            className="text-green-600 hover:text-green-700 transition-all"
+                                            onClick={() => addProductCategoryFunc(oneMap._id)}
+                                        >
+                                            Add
+                                        </button>
+                                }
+
                             </div>
                         ))}
                     </div>
@@ -104,5 +119,7 @@ const AddProductModal = ({ product, onInputChange, onClose, isOpen, selectedImag
         </div>
     )
 }
+
+
 
 export default AddProductModal

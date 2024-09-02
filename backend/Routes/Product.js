@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
       description,
       price,
       picture,
-      subcategory,
+      subcategory: JSON.parse(subcategory),
     });
     await newProduct.save();
     res.status(201).json(newProduct);

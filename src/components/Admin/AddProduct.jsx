@@ -12,6 +12,7 @@ const AddProduct = () => {
     const { REACT_APP_BACKEND_HOST } = useContext(FoodContext)
 
     // edidt Product
+    const [addProductCategory, setaddProductCategory] = useState([])
     const [editProductInput, seteditProductInput] = useState({})
     const handleEditProduct = (e) => {
         const { name, value } = e.target
@@ -19,6 +20,13 @@ const AddProduct = () => {
             ...editProductInput,
             [name]: value
         })
+    }
+
+    const addProductCategoryFunc = (id) => {
+        setaddProductCategory([...addProductCategory, id])
+    }
+    const removeProductCategoryFunc = (id) => {
+        setaddProductCategory(addProductCategory.filter(category => category !== id))
     }
 
 
@@ -40,6 +48,7 @@ const AddProduct = () => {
         setselectedImage(null)
         setinputFile(null)
         seteditProductInput({})
+        setaddProductCategory([])
     }
 
     // isModalOpen
@@ -55,9 +64,19 @@ const AddProduct = () => {
     const [addProduct, setaddProduct] = useState()
     const addProductFunc = async () => {
         try {
-            
+            const formData = new FormData();
+            formData.append('name', editProductInput.name);
+            formData.append('price', editProductInput.price);
+            formData.append('description', editProductInput.description);
+            formData.append('picture', inputFile);
+            formData.append('subcategory', JSON.stringify(addProductCategory));
+
+            const response = await axios.post(`${REACT_APP_BACKEND_HOST}/Product/`, formData)
+            setaddProduct(response.data)
+            toast.success('Product added successfully')
         } catch (error) {
             console.log(error)
+            toast.error('Failed to add product')
         }
     }
 
@@ -135,7 +154,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         getProduct()
-    }, [addSubCategory, removeSubCategory, updateProduct])
+    }, [addSubCategory, removeSubCategory, updateProduct, addProduct])
 
     return (
         <div className="p-4">
@@ -166,6 +185,10 @@ const AddProduct = () => {
                     handleChangeFile={handleChangeFile}
                     selectedImage={selectedImage}
                     onInputChange={handleEditProduct}
+                    addProductCategoryFunc={addProductCategoryFunc}
+                    addProductCategory={addProductCategory}
+                    removeProductCategoryFunc={removeProductCategoryFunc}
+                    addProductFunc={addProductFunc}
                 />
             }
 
