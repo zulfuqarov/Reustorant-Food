@@ -15,7 +15,7 @@ const AddProductModal = ({ product, onInputChange, onClose, isOpen, selectedImag
     return (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg">
-                <h2 className="text-2xl font-bold text-gray-800 mb-6">Edit Product</h2>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6">Add Product</h2>
                 <div className="space-y-4">
                     <input
                         value={product.name || ''}

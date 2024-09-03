@@ -5,13 +5,28 @@ import cloudinary from "cloudinary";
 const router = express.Router();
 
 router.post("/", async (req, res) => {
+  const { name, description, price, subcategory } = req.body;
+  const defaultImg =
+    "https://orthomoda.ru/bitrix/templates/.default/img/no-photo.jpg";
+
+  let picture =
+    req.files && req.files.picture
+      ? req.files.picture.tempFilePath
+      : defaultImg;
+
+  if (picture !== defaultImg) {
+    picture = await cloudinary.uploader.upload(picture, {
+      use_filename: true,
+      folder: "Home",
+    });
+  }
+
   try {
-    const { name, description, price, picture, subcategory } = req.body;
     const newProduct = new Product({
       name,
       description,
       price,
-      picture,
+      picture: picture !== defaultImg ? picture.url : picture,
       subcategory: JSON.parse(subcategory),
     });
     await newProduct.save();
