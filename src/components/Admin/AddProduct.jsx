@@ -92,7 +92,7 @@ const AddProduct = () => {
 
         return product.filter((oneFilter) => {
 
-            const nameMatch = oneFilter.name.toLowerCase().trim().includes(searchTerm);
+            const nameMatch = oneFilter.name.toLowerCase().trim().includes(searchTerm.toLowerCase());
 
             const subcategoryMatch = oneFilter.subcategory.some(sub =>
                 sub.name.toLowerCase().trim().includes(searchTerm)
@@ -152,9 +152,22 @@ const AddProduct = () => {
         }
     }
 
+    // remove Product
+    const [removeProduct, setremoveProduct] = useState()
+    const removeProductFunc = async (id) => {
+        try {
+            const response = await axios.delete(`${REACT_APP_BACKEND_HOST}/Product/${id}`)
+            setremoveProduct(response.data)
+            toast.success("Product Deleting")
+        } catch (error) {
+            console.log(error)
+            toast.error(`${error.response.data.message}`)
+        }
+    }
+
     useEffect(() => {
         getProduct()
-    }, [addSubCategory, removeSubCategory, updateProduct, addProduct])
+    }, [addSubCategory, removeSubCategory, updateProduct, addProduct, removeProduct])
 
     return (
         <div className="p-4">
@@ -221,7 +234,7 @@ const AddProduct = () => {
                                         Edit
                                     </button>
                                     <button
-                                        // onClick={() => deleteProduct(product._id)}
+                                        onClick={() => removeProductFunc(product._id)}
                                         className="bg-red-500 text-white p-2 rounded-lg"
                                     >
                                         Delete
@@ -259,7 +272,7 @@ const AddProduct = () => {
                                     Edit
                                 </button>
                                 <button
-                                    // onClick={() => deleteProduct(product._id)}
+                                    onClick={() => removeProductFunc(product._id)}
                                     className="bg-red-500 text-white p-2 rounded-lg"
                                 >
                                     Delete
