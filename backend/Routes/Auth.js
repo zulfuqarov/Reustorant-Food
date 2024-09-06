@@ -2,13 +2,13 @@ import express from "express";
 import bcrypt from "bcrypt";
 import Auth from "../model/Auth.js";
 import jwt from "jsonwebtoken";
-
+import authenticateToken from "../Middleware/CheckToken.js";
 const router = express.Router();
 
 router.post("/Register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
+    const { userName, email, password } = req.body;
+    if (!userName || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -19,7 +19,7 @@ router.post("/Register", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new Auth({
-      name,
+      userName,
       email,
       password: hashedPassword,
       role: "user",
@@ -63,7 +63,7 @@ router.post("/Sign", async (req, res) => {
 
       res.status(200).json({
         message: "Your login has been successfully completed",
-        token,
+        jwtToken,
       });
     }
   } catch (error) {
@@ -71,8 +71,11 @@ router.post("/Sign", async (req, res) => {
   }
 });
 
-router.get("/CheckUser", async (req, res) => {
+router.get("/CheckUser",authenticateToken('user'), async (req, res) => {
   try {
+    const userId = req.userId
+    const user = await Auth.findById(userId).select("-password -email")
+    res.json(user)
   } catch (error) {
     console.log(error);
   }

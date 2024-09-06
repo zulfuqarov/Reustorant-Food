@@ -18,9 +18,12 @@ import AddCategory from './components/Admin/AddCategory';
 import AddSubCategory from './components/Admin/AddSubCategory';
 import AddProduct from './components/Admin/AddProduct';
 
+import axios from 'axios';
 
 const App = () => {
   const location = useLocation();
+
+  axios.defaults.withCredentials = true;
 
   const hideNavbarPaths = ["/Sign", "/Register", "/Admin", "/Admin/Add-Category", "/Admin/Add-SubCategory", "/Admin/Add-Product"];
 

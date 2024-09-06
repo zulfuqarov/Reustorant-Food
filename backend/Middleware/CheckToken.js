@@ -18,3 +18,5 @@ const authenticateToken = (role) => {
     next();
   };
 };
+
+export default authenticateToken;
