@@ -1,6 +1,6 @@
 import React from 'react'
 import Homepage from './pages/Home'
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Router } from "react-router-dom";
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import About from './pages/About';
@@ -36,20 +36,22 @@ const App = () => {
             ? null
             : <Navbar />
         }
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path='/About' element={<About />} />
-          <Route path='/Order-online' element={<Order />} />
-          <Route path='/Reservation' element={<Reservations />} />
-          <Route path="/Sign" element={<Sign />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/Contact" element={<Contact />} />
-          <Route path="/Admin" element={<Admin />} >
-            <Route path="Add-Category" element={<AddCategory />} />
-            <Route path="Add-SubCategory" element={<AddSubCategory />} />
-            <Route path="Add-Product" element={<AddProduct />} />
-          </Route>
-        </Routes >
+        <Router basename="/Reustorant-Food">
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path='/About' element={<About />} />
+            <Route path='/Order-online' element={<Order />} />
+            <Route path='/Reservation' element={<Reservations />} />
+            <Route path="/Sign" element={<Sign />} />
+            <Route path="/Register" element={<Register />} />
+            <Route path="/Contact" element={<Contact />} />
+            <Route path="/Admin" element={<Admin />} >
+              <Route path="Add-Category" element={<AddCategory />} />
+              <Route path="Add-SubCategory" element={<AddSubCategory />} />
+              <Route path="Add-Product" element={<AddProduct />} />
+            </Route>
+          </Routes >
+        </Router>
         {
           hideNavbarPaths.includes(location.pathname)
             ? null
