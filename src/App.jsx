@@ -36,22 +36,22 @@ const App = () => {
             ? null
             : <Navbar />
         }
-        <Router basename="/Reustorant-Food">
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path='/About' element={<About />} />
-            <Route path='/Order-online' element={<Order />} />
-            <Route path='/Reservation' element={<Reservations />} />
-            <Route path="/Sign" element={<Sign />} />
-            <Route path="/Register" element={<Register />} />
-            <Route path="/Contact" element={<Contact />} />
-            <Route path="/Admin" element={<Admin />} >
-              <Route path="Add-Category" element={<AddCategory />} />
-              <Route path="Add-SubCategory" element={<AddSubCategory />} />
-              <Route path="Add-Product" element={<AddProduct />} />
-            </Route>
-          </Routes >
-        </Router>
+
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path='/About' element={<About />} />
+          <Route path='/Order-online' element={<Order />} />
+          <Route path='/Reservation' element={<Reservations />} />
+          <Route path="/Sign" element={<Sign />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path="/Admin" element={<Admin />} >
+            <Route path="Add-Category" element={<AddCategory />} />
+            <Route path="Add-SubCategory" element={<AddSubCategory />} />
+            <Route path="Add-Product" element={<AddProduct />} />
+          </Route>
+        </Routes >
+
         {
           hideNavbarPaths.includes(location.pathname)
             ? null
